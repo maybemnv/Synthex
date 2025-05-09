@@ -1,0 +1,11 @@
+.history/
+task.txt/
+venv/
+Documentation/
+.pytest_cache/
+__pycache__/
+*.py[cod]
+*.pyo
+.vscode/
+.coverage
+.env
