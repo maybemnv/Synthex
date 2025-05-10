@@ -1,13 +1,14 @@
 from fastapi import APIRouter, Depends
-from api.models.schemas import GenerateRequest, LearnRequest, APIResponse
+from api.models.schemas import LearnRequest, APIResponse
 from api.services.llm_provider import LLMProvider, get_provider
 
 router = APIRouter()
+
 @router.post("/learn", response_model=APIResponse)
-async def learn_code(request: LearnRequest, provider: LLMProvider = Depends(get_provider)):
+async def learn_concept(request: LearnRequest, provider: LLMProvider = Depends(get_provider)):
     messages = [
         {"role": "system", "content": "You are an expert programming tutor."},
-        {"role": "user", "content": f"Teach me about {request.topic} ({request.subtopic}) in {request.format} format at {request.difficulty} difficulty."}
+        {"role": "user", "content": f"Teach me about {request.main_topic} in {request.language} at a {request.difficulty} level."}
     ]
     try:
         response = await provider.generate_completion(messages)

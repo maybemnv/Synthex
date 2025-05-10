@@ -11,19 +11,14 @@ class ExplainRequest(BaseModel):
     provider: str = "groq"
 
 class GenerateRequest(BaseModel):
-    prompt: str
+    description: str
     language: str
-    context: str = ""
-    optimization: str = "balanced"
-    include_comments: bool = True
-    provider: str = "groq"
+    difficulty: str
 
 class LearnRequest(BaseModel):
-    topic: str
-    subtopic: str
-    format: str
-    difficulty: str = "intermediate"
-    provider: str = "groq"
+    main_topic: str
+    language: str
+    difficulty: str
 
 class FollowUpRequest(BaseModel):
     question: str

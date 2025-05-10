@@ -8,7 +8,7 @@ router = APIRouter()
 async def generate_code(request: GenerateRequest, provider: LLMProvider = Depends(get_provider)):
     messages = [
         {"role": "system", "content": "You are an expert programmer who writes clean, efficient code."},
-        {"role": "user", "content": f"Generate {request.language} code for:\n{request.prompt}"}
+        {"role": "user", "content": f"Generate {request.language} code for:\n{request.description}"}
     ]
     try:
         response = await provider.generate_completion(messages)
