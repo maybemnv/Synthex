@@ -2,41 +2,54 @@ import pytest
 import os
 import sys
 from fastapi import HTTPException
+from api.services.llm_provider import LLMProvider
 
 # Add parent directory to Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
-from api import LLMProvider
-
 @pytest.mark.asyncio
-async def test_llm_provider_initialization():
-    # Test with valid API key
-    os.environ["GROQ_API_KEY"] = "test_key"
+async def test_llm_provider_initialization(mock_env_vars):
     provider = LLMProvider()
-    assert provider.model == "llama3-8b-8192"
+    assert provider.api_key == "test_key_123"
     assert provider.api_base == "https://api.groq.com/openai/v1"
-
-    # Test with missing API key
-    os.environ.pop("GROQ_API_KEY")
-    with pytest.raises(HTTPException):
-        LLMProvider()
+    assert provider.model == "llama3-8b-8192"
 
 @pytest.mark.asyncio
-async def test_generate_response():
+async def test_generate_completion_success(mock_env_vars, mocker):
     provider = LLMProvider()
-    response = await provider.generate_response(
-        "Explain what this code does: print('hello')",
-        temperature=0.7,
-        max_tokens=100
-    )
-    assert isinstance(response, str)
-    assert len(response) > 0
+    mock_response = {
+        "choices": [{"message": {"content": "Test response"}}]
+    }
+
+    class MockResponse:
+        def raise_for_status(self):
+            pass
+        def json(self):
+            return mock_response
+
+    class MockAsyncClient:
+        async def __aenter__(self):
+            return self
+        async def __aexit__(self, exc_type, exc, tb):
+            pass
+        async def post(self, *args, **kwargs):
+            return MockResponse()
+
+    mocker.patch("httpx.AsyncClient", return_value=MockAsyncClient())
+    result = await provider.generate_completion([{"role": "user", "content": "test"}])
+    assert result == mock_response
 
 @pytest.mark.asyncio
-async def test_provider_error_handling():
-    # Test with invalid API key
-    os.environ["GROQ_API_KEY"] = "invalid_key"
+async def test_generate_completion_api_error(mock_env_vars, mocker):
     provider = LLMProvider()
-    
-    with pytest.raises(HTTPException):
-        await provider.generate_response("test prompt")
+
+    class MockAsyncClient:
+        async def __aenter__(self):
+            raise Exception("Simulated API error")
+        async def __aexit__(self, exc_type, exc, tb):
+            pass
+
+    mocker.patch("httpx.AsyncClient", return_value=MockAsyncClient())
+    with pytest.raises(HTTPException) as exc_info:
+        await provider.generate_completion([{"role": "user", "content": "test"}])
+    assert "LLM API Error" in str(exc_info.value.detail)

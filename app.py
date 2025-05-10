@@ -7,11 +7,13 @@ from utils.code_formatter import CodeFormatter
 
 # Page configuration
 st.set_page_config(
-    page_title="Synthex - AI Code Assistant",
-    page_description="Your intelligent coding assistant and tutor",
-    page_icon="💻",
+    page_title="Synthex",
+    page_icon="🧮",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
+    menu_items={
+        'About': "# Synthex AI\nAI-powered code explanation and learning platform"
+    }
 )
 
 # Initialize session state variables if they don't exist

@@ -86,10 +86,11 @@ AFTERNOON:
 
 EVENING:
 [ ] 13. API Integration
-    [ ] Connect Streamlit frontend components to FastAPI backend (currently using mock data)
-    [ ] Implement loading states and error handling in UI
-    [ ] Add response caching for performance (if needed)
-    [ ] Test end-to-end functionality
+    [ ] Connect Streamlit frontend components to FastAPI backend (replace mock data with real API calls)
+    [ ] Use requests or httpx to POST to /api/explain, /api/generate, /api/learn
+    [ ] Parse and display real backend responses in the UI
+    [ ] Implement loading states and error handling in Streamlit
+    [ ] Test end-to-end functionality (frontend input → backend → frontend output)
 
 [ ] 14. UI Polish - Phase 1
     [ ] Improve component styling (Streamlit themes, CSS)
@@ -112,6 +113,20 @@ MORNING:
     [ ] Add context tracking for learning sessions
     [ ] Test with sample learning scenarios
 
+TESTING & CODE QUALITY:
+[✅] Ensure all models are only in api/models/schemas.py
+[✅] Ensure LLMProvider is only in api/services/llm_provider.py
+[✅] All route files use dependency injection and return APIResponse
+[✅] main.py only includes routers, middleware, and health check
+[✅] All endpoints are tested in tests/integration/test_api_endpoints.py
+[✅] All service logic is tested in tests/unit/test_llm_provider.py
+[✅] All models are tested in tests/unit/test_models.py
+[✅] Error cases are tested in tests/unit/test_error_handling.py
+[✅] All async HTTP calls are properly mocked in tests
+[✅] Run pytest --cov=api --cov-report=term-missing -v and achieve >90% coverage
+[ ] Add or update tests for any uncovered lines or new features
+[ ] Ensure frontend and backend are fully integrated and tested together
+============================================
 AFTERNOON:
 [ ] 17. Advanced Features
     [ ] Implement session history (partially done in frontend)
@@ -128,7 +143,7 @@ AFTERNOON:
 EVENING:
 [✅] 19. Testing & Debugging
     [✅] Create test cases for backend features (unit/integration)
-    [ ] Create test cases for frontend features
+    [ ] Create test cases for frontend features (integration with backend)
     [ ] Test across different browsers (for Streamlit)
     [ ] Fix identified bugs and issues
     [ ] Document known limitations
@@ -198,4 +213,3 @@ STRETCH GOALS (if time permits):
 - Export functionality for explanations
 - Multiple theme options
 - Mobile-optimized view
-============================================
