@@ -42,7 +42,6 @@ def render():
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.markdown('<div class="feature-card">', unsafe_allow_html=True)
         st.markdown("### 🔍 Explain Code")
         st.markdown("""
         Understand complex code with AI-powered explanations tailored to your level.
@@ -56,7 +55,6 @@ def render():
         st.markdown('</div>', unsafe_allow_html=True)
     
     with col2:
-        st.markdown('<div class="feature-card">', unsafe_allow_html=True)
         st.markdown("### ✨ Generate Code")
         st.markdown("""
         Generate code snippets from natural language descriptions.
@@ -70,7 +68,6 @@ def render():
         st.markdown('</div>', unsafe_allow_html=True)
     
     with col3:
-        st.markdown('<div class="feature-card">', unsafe_allow_html=True)
         st.markdown("### 🎓 Learn Concepts")
         st.markdown("""
         Master programming concepts with interactive tutorials.

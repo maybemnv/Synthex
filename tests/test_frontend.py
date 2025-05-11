@@ -47,7 +47,7 @@ def test_explain_api_call(mock_post):
 
 @patch("requests.post")
 def test_generate_api_call(mock_post):
-    from pages import generate
+    from pages import generate_v2
     mock_response = MagicMock()
     mock_response.json.return_value = {
         "success": True,

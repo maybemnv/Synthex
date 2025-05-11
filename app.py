@@ -2,7 +2,7 @@ import streamlit as st
 import os
 from datetime import datetime
 from utils.code_formatter import CodeFormatter
-from pages import home, explain, generate, learn
+from pages import generate, home, explain, learn
 
 def init_session_state():
     defaults = {
@@ -29,25 +29,7 @@ def sidebar_navigation():
     for page_key, page_name in page_options.items():
         if st.button(page_name, key=f"nav_{page_key}"):
             st.session_state.page = page_key
-            st.rerun()  # Use st.rerun() for Streamlit >=1.27
-
-    st.divider()
-    st.header("Settings")
-    st.session_state.language = st.selectbox(
-        "Programming Language",
-        ["Python", "JavaScript", "Java", "C++", "Go", "SQL", "Ruby", "Rust", "PHP"],
-        index=["Python", "JavaScript", "Java", "C++", "Go", "SQL", "Ruby", "Rust", "PHP"].index(st.session_state.language)
-    )
-    st.session_state.difficulty = st.select_slider(
-        "Explanation Level",
-        options=["Beginner", "Intermediate", "Advanced"],
-        value=st.session_state.difficulty
-    )
-    st.session_state.model_provider = st.selectbox(
-        "AI Model Provider",
-        ["Groq (Llama 3)", "Google AI (Gemini Pro)", "Hugging Face", "OpenAI"],
-        index=["Groq (Llama 3)", "Google AI (Gemini Pro)", "Hugging Face", "OpenAI"].index(st.session_state.model_provider)
-    )
+            st.rerun() 
     st.divider()
     st.markdown("### About")
     st.markdown("""
@@ -58,7 +40,7 @@ def sidebar_navigation():
     """)
 
 def render_header(formatter):
-    css = """
+    st.markdown("""
     <style>
         .main-header {
             font-size: 64px;
@@ -108,8 +90,7 @@ def render_header(formatter):
             padding: 0;
         }
     </style>
-    """
-    st.markdown(css + formatter.get_css_styles(), unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
     st.markdown('<p class="main-header">Synthex</p>', unsafe_allow_html=True)
     st.markdown('<p class="sub-header">Your intelligent coding assistant and tutor</p>', unsafe_allow_html=True)
 
@@ -119,26 +100,26 @@ def render_history(formatter):
             st.info("Your session history will appear here. Try generating or explaining some code first!")
         else:
             for i, item in enumerate(reversed(st.session_state.history)):
-                with st.expander(f"{item['timestamp']} - {item['mode']} ({item.get('language', '')})"):
-                    if item['mode'] == "Explanation":
-                        if 'full_code' in item:
-                            highlighted_code = formatter.highlight_code(
-                                item['full_code'], 
-                                item['language'].lower()
-                            )
-                            st.markdown(highlighted_code, unsafe_allow_html=True)
-                        st.markdown(item.get('explanation', ''))
-                    elif item['mode'] == "Generation":
-                        st.markdown(f"**Prompt**: {item.get('prompt', '')}")
-                        if 'code' in item:
-                            highlighted_code = formatter.highlight_code(
-                                item['code'], 
-                                item['language'].lower()
-                            )
-                            st.markdown(highlighted_code, unsafe_allow_html=True)
-                    elif item['mode'] == "Learning":
-                        st.markdown(f"**Topic**: {item.get('topic', '')}")
-                        st.markdown(f"**Difficulty**: {item.get('difficulty', '')}")
+                st.markdown(f"**{item['timestamp']} - {item['mode']} ({item.get('language', '')})**")
+                if item['mode'] == "Explanation":
+                    if 'full_code' in item:
+                        highlighted_code = formatter.highlight_code(
+                            item['full_code'], 
+                            item['language'].lower()
+                        )
+                        st.markdown(highlighted_code, unsafe_allow_html=True)
+                    st.markdown(item.get('explanation', ''))
+                elif item['mode'] == "Generation":
+                    st.markdown(f"**Prompt**: {item.get('prompt', '')}")
+                    if 'code' in item:
+                        highlighted_code = formatter.highlight_code(
+                            item['code'], 
+                            item['language'].lower()
+                        )
+                        st.markdown(highlighted_code, unsafe_allow_html=True)
+                elif item['mode'] == "Learning":
+                    st.markdown(f"**Topic**: {item.get('topic', '')}")
+                    st.markdown(f"**Difficulty**: {item.get('difficulty', '')}")
 
 def main():
     init_session_state()
