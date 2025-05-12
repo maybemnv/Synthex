@@ -88,9 +88,9 @@ def render():
     with col1:
         focus_areas = st.multiselect(
             "Focus Areas",
-            ["Algorithm Steps", "Time Complexity", "Space Complexity", 
-             "Best Practices", "Alternative Approaches"],
-            default=["Algorithm Steps", "Time Complexity"]
+            ["Logic Flow", "Time Complexity", "Space Complexity", "Best Practices", "Edge Cases"],
+            default=["Logic Flow"],
+            help="Select what aspects to focus on in the explanation"
         )
     
     # Right column - Options
@@ -112,16 +112,20 @@ def render():
     
     # Difficulty selection - right column
     with col2:
-        difficulty = st.select_slider(
-            "Explanation Level",
+        explanation_level = st.select_slider(
+            "Explanation Detail Level",
             options=["Beginner", "Intermediate", "Advanced"],
-            value=st.session_state.get("difficulty", "Intermediate")
+            value="Intermediate",
+            help="Choose explanation complexity:\n" +
+                 "• Beginner: Basic concepts, step-by-step\n" +
+                 "• Intermediate: More technical details\n" +
+                 "• Advanced: In-depth analysis & optimizations"
         )
     
     # Explain button
     if st.button("Explain Code", type="primary"):
         explanation = handle_explanation_request(
-            code, language, difficulty, focus_areas, 
+            code, language, explanation_level, focus_areas, 
             show_line_by_line, include_examples
         )
     

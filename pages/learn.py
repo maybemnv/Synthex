@@ -25,8 +25,11 @@ def render():
     with col1:
         main_topic = st.selectbox(
             "Main Topic",
-            ["Data Structures", "Algorithms", "Object-Oriented Programming", "Functional Programming", 
-             "Web Development", "Database Design", "Design Patterns", "Testing"]
+            ["Data Structures", "Algorithms", "AI", "Object-Oriented Programming", 
+             "Functional Programming", "Web Development", "Database Design", 
+             "Design Patterns", "Testing"],
+            help="Choose a main topic to study.\n" +
+                 "Each topic has specific subtopics and learning paths."
         )
     
     with col2:
@@ -50,12 +53,37 @@ def render():
                 "Specific Topic",
                 ["HTML/CSS Basics", "JavaScript Fundamentals", "API Design", "Authentication", "Frontend Frameworks", "Backend Development"]
             )
+        elif main_topic == "AI":
+            subtopic = st.selectbox(
+                "Specific Topic",
+                [
+                    # Machine Learning
+                    "ML - Supervised Learning",
+                    "ML - Unsupervised Learning",
+                    "ML - Model Evaluation",
+                    # Deep Learning
+                    "DL - Neural Networks",
+                    "DL - CNN Architecture",
+                    "DL - RNN & LSTM",
+                    # NLP
+                    "NLP - Text Processing",
+                    "NLP - Word Embeddings",
+                    "NLP - Transformers",
+                    # Computer Vision
+                    "CV - Image Processing",
+                    "CV - Object Detection",
+                    "CV - Image Segmentation",
+                    # Reinforcement Learning
+                    "RL - Q-Learning",
+                    "RL - Policy Gradients",
+                    "RL - Deep RL"
+                ]
+            )
         else:
             subtopic = st.selectbox(
                 "Specific Topic",
                 ["Introduction", "Advanced Concepts", "Best Practices", "Common Patterns"]
             )
-    
     # Learning preferences
     col1, col2 = st.columns(2)
     with col1:
@@ -72,12 +100,46 @@ def render():
             value="Intermediate"
         )
     
+    # After language selection
+    if main_topic == "AI":
+        framework = st.selectbox(
+            "Framework",
+            [
+                "TensorFlow",
+                "PyTorch",
+                "Scikit-learn",
+                "Keras",
+                "Hugging Face",
+                "OpenCV"
+            ],
+            help="Select your preferred AI framework:\n" +
+                 "• TensorFlow/Keras: Google's ML framework\n" +
+                 "• PyTorch: Facebook's ML framework\n" +
+                 "• Scikit-learn: For classical ML algorithms\n" +
+                 "• Hugging Face: For NLP tasks\n" +
+                 "• OpenCV: For computer vision"
+        )
+    
     # Learning format
-    learning_format = st.radio(
-        "Learning Format",
-        ["Concept Explanation", "Interactive Tutorial", "Challenge Problem"],
-        horizontal=True
-    )
+    if main_topic == "AI":
+        learning_format = st.radio(
+            "Learning Format",
+            [
+                "Concept Explanation",
+                "Interactive Tutorial",
+                "Challenge Problem",
+                "Model Implementation",
+                "Dataset Analysis",
+                "Model Evaluation"
+            ],
+            horizontal=True
+        )
+    else:
+        learning_format = st.radio(
+            "Learning Format",
+            ["Concept Explanation", "Interactive Tutorial", "Challenge Problem"],
+            horizontal=True
+        )
     
     if st.button("Start Learning", type="primary"):
         with st.spinner("Preparing your learning content..."):
@@ -87,6 +149,8 @@ def render():
                     "main_topic": main_topic,
                     "language": language.lower(),
                     "difficulty": difficulty.lower(),
+                    "framework": framework.lower() if framework else None,
+                    "subtopic": subtopic
                 }
                 params = {
                     "template": learning_format.lower().replace(" ", "_"),
@@ -124,6 +188,9 @@ def render():
         popular_topics = [
             ("Data Structures", "Arrays", "Python", "Beginner"),
             ("Algorithms", "Sorting", "JavaScript", "Intermediate"),
+            ("AI", "ML - Supervised Learning", "Python", "Beginner"),
+            ("AI", "DL - Neural Networks", "Python", "Intermediate"),
+            ("AI", "NLP - Transformers", "Python", "Advanced"),
             ("Object-Oriented Programming", "Classes & Objects", "Java", "Beginner"),
             ("Web Development", "API Design", "Python", "Intermediate"),
             ("Database Design", "Introduction", "SQL", "Beginner")
