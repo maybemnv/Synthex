@@ -100,7 +100,8 @@ def render():
             value="Intermediate"
         )
     
-    # After language selection
+    # --- FIX: Always define framework ---
+    framework = None
     if main_topic == "AI":
         framework = st.selectbox(
             "Framework",
