@@ -1,8 +1,14 @@
 .history/
 task.txt
 venv/
+Tool/
 .pytest_cache/
 __pycache__/
 .vscode/
 .coverage
 .env
+out
+dist
+node_modules
+.vscode-test/
+*.vsix
