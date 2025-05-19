@@ -93,14 +93,28 @@ class CodeDisplay:
             st.markdown(f"#### {title}")
         
         # Format and highlight the code
-        try:
-            formatted_code = self.formatter.format_code(code, language)
-            highlighted_code = self.formatter.highlight_code(formatted_code, language)
-            st.markdown(highlighted_code, unsafe_allow_html=True)
-        except Exception as e:
-            st.error(f"Error formatting code: {str(e)}")
-            # Fallback to plain code display
-            st.code(code, language=language.lower())
+        with st.spinner("Processing code..."):
+            try:
+                # Show loading animation
+                placeholder = st.empty()
+                placeholder.markdown(
+                    '<div class="loading" style="height: 200px"></div>',
+                    unsafe_allow_html=True
+                )
+                
+                # Format and highlight code
+                formatted_code = self.formatter.format_code(code, language)
+                highlighted_code = self.formatter.highlight_code(
+                    formatted_code, 
+                    language
+                )
+                
+                # Replace loading animation with code
+                placeholder.markdown(highlighted_code, unsafe_allow_html=True)
+                
+            except Exception as e:
+                st.error(f"Error processing code: {str(e)}")
+                st.code(code, language=language.lower())
         
         # Add buttons
         col1, col2 = st.columns([1, 6])  # Adjust column proportions as needed

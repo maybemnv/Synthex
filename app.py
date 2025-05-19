@@ -3,6 +3,8 @@ import os
 from datetime import datetime
 from utils.code_formatter import CodeFormatter
 from pages import generate, home, explain, learn
+from components.settings import Settings
+from utils.shortcuts import KeyboardShortcuts
 
 def init_session_state():
     defaults = {
@@ -219,6 +221,106 @@ def render_header(formatter):
             margin-top: 4px;
             font-style: italic;
         }
+
+        /* Theme Variables */
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --text-primary: #1e1e1e;
+            --text-secondary: #666666;
+            --accent-primary: #2962ff;
+            --accent-secondary: #304ffe;
+        }
+        
+        [data-theme="dark"] {
+            --bg-primary: #1e1e1e;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --accent-primary: #768fff;
+            --accent-secondary: #7986cb;
+        }
+
+        /* Enhanced Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        /* Loading Animation */
+        .loading {
+            background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-primary) 50%, var(--bg-secondary) 75%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite linear;
+        }
+
+        /* Enhanced UI Components */
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Code Block Enhancements */
+        .source {
+            font-size: var(--code-font-size);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .source:hover {
+            transform: scale(1.01);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Enhanced Buttons */
+        .stButton button {
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .stButton button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Keyboard Shortcut Tooltip */
+        .shortcut-tooltip {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--bg-secondary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
     </style>
     """, unsafe_allow_html=True)
     st.markdown('<p class="main-header">Synthex</p>', unsafe_allow_html=True)
@@ -308,10 +410,28 @@ def render_history(formatter):
 def main():
     init_session_state()
     formatter = CodeFormatter()
+    settings = Settings()
+    shortcuts = KeyboardShortcuts()
+    
+    # Apply theme
+    st.markdown(f"""
+        <script>
+            document.body.setAttribute('data-theme', 
+                '{st.session_state.settings["theme"]}');
+            document.body.style.setProperty('--code-font-size', 
+                '{st.session_state.settings["code_font_size"]}px');
+        </script>
+    """, unsafe_allow_html=True)
+    
     render_header(formatter)
+    
     with st.sidebar:
         sidebar_navigation()
-        render_navigation()
+        settings.render()
+        
+    if st.session_state.settings["keyboard_shortcuts"]:
+        shortcuts.register_shortcuts()
+    
     # Main content area - render the selected page
     page = st.session_state.page
     if page == "home":
