@@ -11,7 +11,10 @@ pygments
 streamlit-ace
 streamlit-code-editor
 pygments
-
+streamlit-ace
+black
+autopep8
+pygments
 twisted
 pytest
 pytest-asyncio
@@ -19,7 +22,8 @@ pytest-cov
 httpx
 aiohttp
 pytest-mock
-requestshttpcore
+requests
+httpcore
 python-multipart
 markdown
 numpy
