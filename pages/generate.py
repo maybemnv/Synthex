@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 from datetime import datetime
 from typing import Dict, Any
+from utils.file_handler import FileHandler  # Import your existing FileHandler
 
 def add_to_history(result: Dict[str, Any], description: str, language: str) -> None:
     """Add generated code to session history"""
@@ -15,7 +16,45 @@ def add_to_history(result: Dict[str, Any], description: str, language: str) -> N
             "time_complexity": result["data"].get("time_complexity", "N/A"),
             "space_complexity": result["data"].get("space_complexity", "N/A")
         }
+        if 'history' not in st.session_state:
+            st.session_state.history = []
         st.session_state.history.append(history_item)
+
+def get_file_extension(language: str) -> str:
+    """Get appropriate file extension for the language"""
+    extensions = {
+        "python": ".py",
+        "javascript": ".js",
+        "java": ".java",
+        "c++": ".cpp",
+        "c": ".c",
+        "go": ".go",
+        "sql": ".sql",
+        "ruby": ".rb",
+        "rust": ".rs",
+        "php": ".php",
+        "html": ".html",
+        "css": ".css"
+    }
+    return extensions.get(language.lower(), ".txt")
+
+def create_downloadable_content(code: str, time_complexity: str, space_complexity: str, 
+                              description: str, language: str) -> str:
+    """Create formatted content for download"""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    content = f"""/*
+Generated Code
+Language: {language}
+Description: {description}
+Generated on: {timestamp}
+Time Complexity: {time_complexity}
+Space Complexity: {space_complexity}
+*/
+
+{code}
+"""
+    return content
 
 def render():
     st.markdown("## ✨ Code Generation")
@@ -80,17 +119,73 @@ def render():
                 if response.status_code != 200:
                     st.error(f"API Error (Status {response.status_code}): {response.text}")
                     return
+                    
                 result = response.json()
                 if result["success"]:
+                    generated_code = result["data"]["generated_code"]
+                    time_complexity = result["data"].get("time_complexity", "N/A")
+                    space_complexity = result["data"].get("space_complexity", "N/A")
+                    
                     st.markdown("### Generated Code:")
-                    st.code(result["data"]["generated_code"], language=language.lower())
-                    st.markdown(f"**Time Complexity:** {result['data'].get('time_complexity', 'N/A')}")
-                    st.markdown(f"**Space Complexity:** {result['data'].get('space_complexity', 'N/A')}")
-                    if st.button("📋 Copy Code"):
-                        st.toast("Code copied to clipboard!", icon="📋")
+                    st.code(generated_code, language=language.lower())
+                    st.markdown(f"**Time Complexity:** {time_complexity}")
+                    st.markdown(f"**Space Complexity:** {space_complexity}")
+                    
+                    # Action buttons in columns
+                    col1, col2 = st.columns(2)
+                    
+                    with col1:
+                        if st.button("📋 Copy Code"):
+                            st.toast("Code copied to clipboard!", icon="📋")
+                    
+                    with col2:
+                        download_format = st.selectbox(
+                            "Download Format",
+                            ["Code file", "Text file"],
+                            key="download_format"
+                        )
+                        
+                        if download_format == "Code file":
+                            file_ext = get_file_extension(language)
+                            downloadable_content = create_downloadable_content(
+                                generated_code, 
+                                time_complexity, 
+                                space_complexity, 
+                                code_description, 
+                                language
+                            )
+                            st.download_button(
+                                label="📥 Download Code",
+                                data=downloadable_content,
+                                file_name=f"generated_code{file_ext}",
+                                mime="text/plain"
+                            )
+                        else:
+                            text_content = f"""Generated Code Summary
+========================
+
+Description: {code_description}
+Language: {language}
+Generated on: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+
+Time Complexity: {time_complexity}
+Space Complexity: {space_complexity}
+
+Code:
+-----
+{generated_code}
+"""
+                            st.download_button(
+                                label="📥 Download as Text",
+                                data=text_content,
+                                file_name=f"generated_code_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt",
+                                mime="text/plain"
+                            )
+                    
                     add_to_history(result, code_description, language)
                 else:
                     st.error(f"Error generating code: {result.get('error', 'Unknown error')}")
+                    
             except requests.exceptions.ConnectionError:
                 st.error("Could not connect to the API server. Make sure the API server is running.")
             except requests.exceptions.Timeout:

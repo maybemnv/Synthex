@@ -49,25 +49,20 @@ class StateManager:
         st.rerun()
     
     @staticmethod
-    def add_to_history(entry_type: str, data: Dict[str, Any]):
+    def add_to_history(data: Dict[str, Any]):
         """
-        Add a new entry to the history with consistent format
+        Add a new entry to the history
         
-        Parameters:
-            entry_type: Type of history entry (Explanation, Generation, Learning)
-            data: Dictionary containing entry-specific data
+        Args:
+            data: Dictionary containing the history entry data
         """
-        # Ensure timestamp is added
-        if 'timestamp' not in data:
-            data['timestamp'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        
-        # Ensure mode is set
-        data['mode'] = entry_type
-        
-        # Add to history
         if 'history' not in st.session_state:
             st.session_state.history = []
-            
+        
+        # Add timestamp if not present
+        if 'timestamp' not in data:
+            data['timestamp'] = datetime.now().isoformat()
+                
         st.session_state.history.append(data)
         
         # Cap history size to prevent memory issues
