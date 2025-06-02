@@ -1,7 +1,6 @@
 .history/
 task.txt
 venv/
-Tool/
 .pytest_cache/
 __pycache__/
 .vscode/

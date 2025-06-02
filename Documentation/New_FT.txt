@@ -31,24 +31,17 @@ Database Integration: Implement PostgreSQL or MongoDB for persistent storage
 
 Interactive Quiz Generator: Automatically generate quizzes from learning content
 
-🧠 CORE FUNCTIONALITY
-Feature	Description
-1. Code Explanation	Right-click or command to explain code using /api/explain (MVP feature)
-2. Code Generation	Input a prompt → get optimized code via /api/generate
-3. Learn Mode	Sidebar view to explore topics and get interactive content via /api/learn
-4. Follow-up Questions	Ask more questions on previously explained code
+
 5. Multi-language Support	Let user pick Python, C++, Java, etc.
 🔁 INTERACTION UX
 Feature	Description
-7. Sidebar Panel	“Explain”, “Generate”, “Learn” tabs with inputs and results
+
 8. Contextual Commands	Use CodeLens or right-click menu for line-based or selection-based interaction
 9. Inline Ghost Suggestions	Show faded text as completions, similar to Copilot
 10. Command Palette Integration	Cmd+Shift+P → Explain this code
 11. Output Formatting	Markdown + syntax-highlighted panels
 📎 FILE & PROJECT FEATURES
 Feature	Description
-16. File Drop Explanation	Drag a .py or .java file → auto-analysis
-17. Explain Selected File	Button/command to summarize full file or module
 18. Explain Git Diffs	(Advanced) Parse Git diff output → explain changes
 🧪 TESTING & DEPLOYMENT
 Feature	Description

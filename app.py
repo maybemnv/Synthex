@@ -3,8 +3,6 @@ import os
 from datetime import datetime
 from utils.code_formatter import CodeFormatter
 from pages import generate, home, explain, learn
-
-# Enhanced components imports
 from components.theme_toggle import ThemeToggle
 from components.settings_panel import SettingsPanel
 from components.advanced_code_editor import AdvancedCodeEditor
