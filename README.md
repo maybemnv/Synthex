@@ -11,8 +11,6 @@ _Your AI-Powered Coding Companion_
 [![Coverage](https://img.shields.io/badge/coverage-90%25-brightgreen)](https://codecov.io)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-[Live Demo](https://synthex-demo.com) • [Documentation](./Documentation) • 
-
 </div>
 
 ## 🎯 Overview
@@ -49,7 +47,6 @@ Synthex is your advanced AI coding assistant that transforms how developers unde
 ```bash
 Python 3.9+
 Git
-Docker (optional)
 Groq API key
 ```
 
@@ -67,8 +64,7 @@ python -m venv venv
 pip install -r requirements.txt
 
 # Configure environment
-copy .env.example .env
-# Add your GROQ_API_KEY to .env
+Add your GROQ_API_KEY to .env
 ```
 
 ### Running Locally
@@ -84,34 +80,27 @@ Access:
 - Frontend: http://localhost:8501
 - API Docs: http://localhost:8000/docs
 
-### Docker Setup
-```bash
-docker-compose up -d
-```
-
 ## 📚 Documentation
 
-- [API Reference](docs/api.md)
-- [Architecture Guide](docs/architecture.md)
-- [Contributing Guide](docs/contributing.md)
-- [Deployment Guide](docs/deployment.md)
-
-## 🧪 Testing
-
-```bash
-# Run all tests
-pytest
-
-# With coverage
-pytest --cov=. tests/
-```
+- [API Reference](Documentation/API.md)
+- [User Guide](Documentation/Useage.md)
+- [Architecture Guide](Documentation/Architercture%20Guide.md)
 
 ## 📈 Performance
 
-- Response Time: < 500ms
-- Concurrent Users: 1000+
+- Response Time: < 500ms+
 - Code Analysis Accuracy: 95%+
 
+## 🔮 Future Improvements
+
+Planned enhancements for Synthex include:
+
+- **Multi-LLM Support:** Integrate additional large language models (e.g., OpenAI GPT, Anthropic Claude) for fallback and response comparison.
+- **VS Code Extension:** Develop a Visual Studio Code extension with features like inline ghost suggestions, contextual commands, and command palette integration for seamless in-editor AI assistance.
+- **Advanced/Nice-to-Have Features:**
+  - Progress tracker for learning mode and topic completion
+  - Git diff explanation (explain code changes directly from version control)
+  - Integration with communication tools (Slack, Discord, Teams)
 
 ## 🤝 Contributing
 
@@ -124,6 +113,3 @@ pytest --cov=. tests/
 ## 📄 License
 
 [MIT License](LICENSE) - feel free to use this project as you wish.
-<div align="center">
-Made with ❤️ by the Synthex Team
-</div>

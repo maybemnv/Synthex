@@ -1,7 +1,7 @@
 from pydantic_settings import BaseSettings
 
 LLAMA_CONFIG = {
-    "model": "llama3-8b-8192",
+    "model": "llama-3.1-8b-instant",
     "default_temp": 0.7,
     "max_tokens": {
         "explain": 2048,

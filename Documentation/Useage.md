@@ -3,37 +3,36 @@
 ## Getting Started
 
 1. **Launch the app:**  
-   - Start backend: `uvicorn api.main:app --reload`
+   - Start backend: `uvicorn main:app --reload --port 8000`
    - Start frontend: `streamlit run app.py`
 2. **Navigate using the sidebar:**  
    - Select "Generate", "Explain", or "Learn" mode.
 
-## Example Workflows
+## Features
 
 ### Code Generation
-- Select **Generate** mode.
+- Select **Code Generation**.
 - Enter a prompt (e.g., "Write a Python function to reverse a string").
-- Choose language and optimization focus.
+- Choose language, optimization focus, and options.
 - Click **Generate Code**.
-- Copy or review the generated code.
+- Copy, download, or export the generated code.
 
 ### Code Explanation
-- Select **Explain** mode.
-- Paste your code (e.g., `def fib(n): ...`).
+- Select **Code Explanation**.
+- Paste code or upload a file.
 - Choose explanation detail level and focus areas.
 - Click **Explain Code**.
-- Read the explanation and ask follow-up questions.
+- Read the explanation, download it, or ask follow-up questions.
 
 ### Learning Mode
-- Select **Learn** mode.
-- Pick a main topic (e.g., "AI") and subtopic (e.g., "ML - Supervised Learning").
-- Choose your preferred language and difficulty.
+- Select **Interactive Learning**.
+- Pick a main topic and subtopic.
+- Choose your preferred language, difficulty, and framework (if AI).
 - Follow the interactive tutorial or quiz.
-
----
 
 ## Tips
 
 - Use session history to revisit previous explanations and code.
 - Adjust settings for a personalized experience.
 - Use tooltips for guidance on each input.
+- Download explanations and code in Markdown or plain text.

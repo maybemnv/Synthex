@@ -10,7 +10,7 @@ class Settings:
     # Add more keys as needed
 
     # Model configuration
-    LLAMA_MODEL: str = "llama3-8b-8192"
+    LLAMA_MODEL: str = "llama-3.1-8b-instant"
     DEFAULT_TEMPERATURE: float = 0.7
     MAX_TOKENS = {
         "explain": 2048,
@@ -20,8 +20,8 @@ class Settings:
     CONTEXT_WINDOW: int = 8192
 
     # FastAPI settings
-    API_TITLE: str = "CodeMentor AI API"
-    API_DESCRIPTION: str = "Backend API for the CodeMentor AI application"
+    API_TITLE: str = "Synthex AI API"
+    API_DESCRIPTION: str = "Backend API for the Synthex AI application"
     API_VERSION: str = "1.0.0"
 
     # CORS settings
