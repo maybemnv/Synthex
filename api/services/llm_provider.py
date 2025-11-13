@@ -8,7 +8,7 @@ class LLMProvider:
         if not self.api_key:
             raise HTTPException(status_code=500, detail="GROQ_API_KEY not found in environment variables")
         self.api_base = "https://api.groq.com/openai/v1"
-        self.model = "llama-3.1-8b-instant"
+        self.model = "llama-3.3-70b-versatile"
 
     async def generate_completion(self, messages: list, max_tokens: int = 1000):
         headers = {

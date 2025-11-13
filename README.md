@@ -70,7 +70,7 @@ Add your GROQ_API_KEY to .env
 ### Running Locally
 ```bash
 # Start backend
-uvicorn api.main:app --reload --port 8000
+uvicorn main:app --reload --port 8000
 
 # Start frontend (new terminal)
 streamlit run app.py
