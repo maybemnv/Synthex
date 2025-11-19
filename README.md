@@ -24,18 +24,21 @@ Synthex is your advanced AI coding assistant that transforms how developers unde
 ## ✨ Key Features
 
 ### 1. Code Explanation Engine
+
 - Line-by-line code analysis
 - Time & space complexity insights
 - Best practices recommendations
 - Multi-language support
 
 ### 2. Code Generation
+
 - Natural language to code conversion
 - Optimization suggestions
 - Template-based generation
 - Context-aware completions
 
 ### 3. Learning Platform
+
 - Interactive tutorials
 - Hands-on challenges
 - Progress tracking
@@ -44,6 +47,7 @@ Synthex is your advanced AI coding assistant that transforms how developers unde
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 ```bash
 Python 3.9+
 Git
@@ -51,6 +55,7 @@ Groq API key
 ```
 
 ### Installation
+
 ```bash
 # Clone repository
 git clone https://github.com/your-username/synthex.git
@@ -68,6 +73,7 @@ Add your GROQ_API_KEY to .env
 ```
 
 ### Running Locally
+
 ```bash
 # Start backend
 uvicorn main:app --reload --port 8000
@@ -77,6 +83,7 @@ streamlit run app.py
 ```
 
 Access:
+
 - Frontend: http://localhost:8501
 - API Docs: http://localhost:8000/docs
 

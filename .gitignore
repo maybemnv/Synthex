@@ -1,8 +1,9 @@
 .history/
 task.txt
-venv/
+.venv/
 .pytest_cache/
 __pycache__/
 .vscode/
 .coverage
 .env
+**/node_modules/
