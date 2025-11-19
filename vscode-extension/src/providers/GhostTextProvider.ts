@@ -44,8 +44,14 @@ export class SynthexGhostTextProvider implements vscode.InlineCompletionItemProv
                     new vscode.Range(position, position)
                 )];
             }
-        } catch (e) {
-            Logger.error("Ghost text generation failed", e);
+        } catch (e: any) {
+            Logger.error("Ghost text generation failed");
+            if (e.response) {
+                Logger.error(`API Status: ${e.response.status}`);
+                Logger.error(`API Data: ${JSON.stringify(e.response.data)}`);
+            } else {
+                Logger.error(`Error details: ${e.message}`);
+            }
         }
 
         return undefined;
