@@ -38,6 +38,7 @@ exports.deactivate = deactivate;
 const vscode = __importStar(require("vscode"));
 const logger_1 = require("./utils/logger");
 const explain_1 = require("./commands/explain");
+const generate_1 = require("./commands/generate");
 const GhostTextProvider_1 = require("./providers/GhostTextProvider");
 const CodeActionProvider_1 = require("./providers/CodeActionProvider");
 function activate(context) {
@@ -47,7 +48,7 @@ function activate(context) {
         (0, explain_1.explainCode)(context);
     });
     let generateDisposable = vscode.commands.registerCommand('synthex.generateCode', () => {
-        vscode.window.showInformationMessage('Code Generation coming soon!');
+        (0, generate_1.generateCode)(context);
     });
     // Register Providers
     const ghostTextProvider = vscode.languages.registerInlineCompletionItemProvider({ pattern: '**' }, // Apply to all files

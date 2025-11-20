@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { Logger } from './utils/logger';
 import { explainCode } from './commands/explain';
+import { generateCode } from './commands/generate';
 import { SynthexGhostTextProvider } from './providers/GhostTextProvider';
 import { SynthexCodeActionProvider } from './providers/CodeActionProvider';
 
@@ -13,7 +14,7 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     let generateDisposable = vscode.commands.registerCommand('synthex.generateCode', () => {
-        vscode.window.showInformationMessage('Code Generation coming soon!');
+        generateCode(context);
     });
 
     // Register Providers
