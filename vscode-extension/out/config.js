@@ -37,7 +37,7 @@ exports.getApiUrl = void 0;
 const vscode = __importStar(require("vscode"));
 const getApiUrl = () => {
     const config = vscode.workspace.getConfiguration('synthex');
-    return config.get('apiUrl', 'http://localhost:8000/api');
+    return config.get('apiUrl', 'https://synthex-3.onrender.com/api');
 };
 exports.getApiUrl = getApiUrl;
 //# sourceMappingURL=config.js.map

@@ -145,7 +145,7 @@ def render():
     if st.button("Start Learning", type="primary"):
         with st.spinner("Preparing your learning content..."):
             try:
-                api_url = "http://localhost:8000/api/learn"
+                api_url = "https://synthex-3.onrender.com/api/learn"
                 payload = {
                     "main_topic": main_topic,
                     "language": language.lower(),

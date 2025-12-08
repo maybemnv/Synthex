@@ -95,7 +95,7 @@ def render():
         with st.spinner("🤖 Generating your code..."):
             try:
                 # API call setup
-                api_url = "http://localhost:8000/api/generate"
+                api_url = "https://synthex-3.onrender.com/api/generate"
                 payload = {
                     "language": language.lower(),
                     "description": code_description,

@@ -12,7 +12,7 @@ class APIService:
     Abstracts API communication details from the UI components.
     """
     
-    def __init__(self, base_url: str = "http://localhost:8000"):
+    def __init__(self, base_url: str = "https://synthex-3.onrender.com"):
         """
         Initialize the API service
         
